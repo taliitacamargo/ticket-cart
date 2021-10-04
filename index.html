@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <title>Dynamically change your shopping cart total</title>
+  </head>
+
+  <body>
+    <section class="container">
+
+          <article class="top-line">
+            <h2>Cart Total (2 Items): <strong class="cart-total"></strong></h2>
+          </article>
+          <section>
+          <div>
+          <article>
+              <h3>Ed Sheeran - General Admissions<br>
+                <small>Cost: $50.00/ea</small>
+              </h3>
+            </article>
+
+            <div class="product-price" style= display:none;>50</div>
+
+            <article class="pass-quantity">
+              <label for="pass-quantity" class="pass-quantity">Quantity</label>
+              <input class="form-control" type="number" value="1" min="1">
+            </article>
+
+            <article class="product-line-price">
+              <span class="product-line-price">$50.00
+              </span>
+            </article>
+
+            <article class="remove-item">
+              <button class="remove-product">
+                Delete
+              </button>
+            </article>
+
+          </div>
+        </section>
+
+          <section class="item">
+          <div>
+            <article>
+              <h3>Drake - General Admissions<br><small><small>Cost: $45.00/ea</small></small></h3>
+            </article>
+
+            <div class="product-price" style="display:none;">45.00</div>
+
+            <article class="pass-quantity">
+              <label for="pass-quantity" class="pass-quantity">Quantity</label>
+              <input class="form-control" type="number" value="1" min="1">
+            </article>
+
+            <article class="product-line-price">
+              <span class="product-line-price">45.00</span>
+            </article>
+
+            <article class="remove-item">
+              <button class="remove-product">
+                Delete
+              </button>
+            </article>
+          </div>
+        </section>
+
+        <div class="totals">
+          <div>
+            <div>
+              <p><strong>Order Summary</strong></p>
+            </div>
+            <div class="totals-item">
+              <p>Subtotal</p>
+              <p class="totals-value" id="cart-subtotal"></p>
+            </div>
+            <div class="totals-item">
+              <p class="text-uppercase">Estimated Tax</p>
+              <p class="totals-value" id="cart-tax"></p>
+            </div>
+            <div class="totals-item totals-item-total">
+              <p><strong>Total</strong></p>
+              <p class="totals-value cart-total"></p>
+            </div>
+          </div class="pay">
+          <a href="data.html" class="btn btn-pay">Pay Now <span class="totals-value cart-total"></span></a>
+          <a href="data.html" class="btn btn-pay">Donate Ticket <span class="totals-value cart-total"></span></a>
+        </div>
+
+      </div>
+    </div><!-- container -->
+
+    <script>
+      $(document).ready(function() {
+
+        /* Set rates + misc */
+        var taxRate = 0.05;
+        var fadeTime = 300;
+
+        $('.pass-quantity input').change(function() {
+          updateQuantity(this);
+        });
+
+        $('.remove-item button').click(function() {
+          removeItem(this);
+        });
+
+
+        /* Recalculate cart */
+        function recalculateCart() {
+          var subtotal = 0;
+
+          /* Sum up row totals */
+          $('.item').each(function() {
+            subtotal += parseFloat($(this).children('.product-line-price').text());
+          });
+
+          /* Calculate totals */
+          var tax = subtotal * taxRate;
+          var total = subtotal + tax;
+
+          /* Update totals display */
+          $('.totals-value').fadeOut(fadeTime, function() {
+            $('#cart-subtotal').html(subtotal.toFixed(2));
+            $('#cart-tax').html(tax.toFixed(2));
+            $('.cart-total').html(total.toFixed(2));
+            if (total == 0) {
+              $('.checkout').fadeOut(fadeTime);
+            } else {
+              $('.checkout').fadeIn(fadeTime);
+            }
+            $('.totals-value').fadeIn(fadeTime);
+          });
+        }
+
+        /* Update quantity */
+        function updateQuantity(quantityInput) {
+          /* Calculate line price */
+          var productRow = $(quantityInput).parent().parent();
+          var price = parseFloat(productRow.children('.product-price').text());
+          var quantity = $(quantityInput).val();
+          var linePrice = price * quantity;
+
+          /* Update line price display and recalc cart totals */
+          productRow.children('.product-line-price').each(function() {
+            $(this).fadeOut(fadeTime, function() {
+              $(this).text(linePrice.toFixed(2));
+              recalculateCart();
+              $(this).fadeIn(fadeTime);
+            });
+          });
+        }
+
+        /* Remove item from cart */
+        function removeItem(removeButton) {
+          /* Remove row from DOM and recalc cart total */
+          var productRow = $(removeButton).parent().parent();
+          productRow.slideUp(fadeTime, function() {
+            productRow.remove();
+            recalculateCart();
+          });
+        }
+
+      });
+
+    </script>
+  </body>
+
+</html>
+
+
+
+
+
+

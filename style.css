@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap');
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+    --primary-color:#e74c3c;
+    --secondary-color:#222;
+    --tertiary-color:#333;
+    --light-color: #fff;
+    scroll-behavior: smooth; 
+}
+
+body {
+    background-color: #1f1f1f;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    color: var(--light-color);
+    line-height: 1.6;
+}
+
+.ticket-group {
+  display: block;
+}
+
+#card-info {
+  display: block;
+  margin-left: 55px;
+} 
+
+.form-control {
+  padding: 5px;
+  width: 30%;
+  margin:7px;
+}
+
+button {
+  padding:5px;
+  background-color:#333 ;
+  color:white;
+  
+}
+
+
+#adult-quantity {
+  width: 3%;
+  font-weight:500;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+section {
+  background-color: white;
+  color: black;
+  margin: 5px;
+  padding:10px;
+  
+
+}
+article {
+  padding:10px;
+  background-color: rgb(207, 207, 207);
+  border-radius: 2px;
+}
+
+.top-line {
+  margin-bottom:5px;
+}
+
+
+
+.btn {
+  background-color: #333;
+  color: white;
+  padding: 5px;
+  border-radius: 2px;
+  margin: 5px;
+}
+
